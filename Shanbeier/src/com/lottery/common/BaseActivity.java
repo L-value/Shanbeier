@@ -37,12 +37,12 @@ public abstract class BaseActivity extends FragmentActivity
 	public abstract void initListener();
 	public abstract void initData();
 	  /**
-     * 妫�煡褰撳墠缃戠粶鏄惁鍙敤
+     * 检查当前网络是否可用
      */
     public boolean isNetworkAvailable(Activity activity)
     {
         Context context = activity.getApplicationContext();
-        // 鑾峰彇鎵嬫満鎵�湁杩炴帴绠＄悊瀵硅薄锛堝寘鎷wi-fi,net绛夎繛鎺ョ殑绠＄悊锛�
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (connectivityManager == null)
@@ -51,16 +51,16 @@ public abstract class BaseActivity extends FragmentActivity
         }
         else
         {
-            // 鑾峰彇NetworkInfo瀵硅薄
+            // 获取NetworkInfo对象
             NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 
             if (networkInfo != null && networkInfo.length > 0)
             {
                 for (int i = 0; i < networkInfo.length; i++)
                 {
-                    System.out.println(i + "===鐘舵�===" + networkInfo[i].getState());
-                    System.out.println(i + "===绫诲瀷===" + networkInfo[i].getTypeName());
-                    // 鍒ゆ柇褰撳墠缃戠粶鐘舵�鏄惁涓鸿繛鎺ョ姸鎬�
+                    System.out.println(i + "===状态===" + networkInfo[i].getState());
+                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
+                    // 判断当前网络状态是否为连接状态
                     if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
                     {
                         return true;
@@ -70,8 +70,6 @@ public abstract class BaseActivity extends FragmentActivity
         }
         return false;
     }
-	
-	
 
     //隐藏软键盘
     void closeInputMethod(Activity activity){
